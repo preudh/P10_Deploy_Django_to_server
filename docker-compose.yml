@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db  # Le service web dépend du service db, donc db sera lancé en premier.
+    environment:  # Variables d'environnement pour la configuration de la base de données
+      DB_HOST: db  # Le nom du service db ci-dessous
+      DB_NAME: ${{DB_NAME }}
+      DB_USER: ${{DB_USER }}
+      DB_PASSWORD: ${{DB_PASSWORD }}
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${{DB_NAME }}
+      POSTGRES_USER: ${{DB_USER }}
+      POSTGRES_PASSWORD: ${{DB_PASSWORD }}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistez les données de la base de données
+
+volumes:
+  postgres_data:
