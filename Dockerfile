@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9  python:3.9-slim-buster
+FROM python:3.9-slim-buster
 # Prevents Python from writing pyc files to disc
 ENV PYTHONDONTWRITEBYTECODE 1
 # Prevents Python from buffering stdout and stderr
