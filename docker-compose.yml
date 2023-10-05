@@ -1,3 +1,4 @@
+# This file is a template, and might need editing before it works on your project.
 version: '3.8'
 
 services:
@@ -5,7 +6,7 @@ services:
     build: .
     command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     volumes:
-      - .:/app
+      - .:/app # Montez le code source actuel dans le conteneur à /app
     ports:
       - "8000:8000"
     depends_on:
@@ -15,6 +16,7 @@ services:
       DB_NAME: ${{DB_NAME }}
       DB_USER: ${{DB_USER }}
       DB_PASSWORD: ${{DB_PASSWORD }}
+      SECRET_KEY: ${{SECRET_KEY }}
 
   db:
     image: postgres:latest
