@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from dotenv import load_dotenv
 
-import django_heroku  # This is a Django library for Heroku applications
 import dj_database_url
 from pathlib import Path
 from django.contrib.messages import constants as messages
@@ -32,7 +31,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")  # take secret key from environment va
 # DEBUG = os.environ.get("DEBUG")  # take debug from environment variables
 DEBUG = os.environ.get("DEBUG") == "True"
 
-ALLOWED_HOSTS = ['p8-django-purbeurre-37bbf40223b7.herokuapp.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -50,7 +49,6 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'crispy_forms',
     'crispy_bootstrap5',
-    'django_command_debug',
     'whitenoise.runserver_nostatic',  # new
 ]
 
@@ -151,6 +149,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-""" To do for heroku """
-django_heroku.settings(locals())
-# test for push to github
+# """ To do for heroku """
+# django_heroku.settings(locals())
+# # test for push to github
