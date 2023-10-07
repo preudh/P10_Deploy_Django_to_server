@@ -149,6 +149,4 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-# """ To do for heroku """
-# django_heroku.settings(locals())
-# # test for push to github
+

@@ -10,6 +10,7 @@ ARG DB_PASSWORD
 ARG DB_HOST
 ARG DB_PORT
 
+
 # Set these arguments as environment variables
 ENV SECRET_KEY=$SECRET_KEY
 ENV DEBUG=$DEBUG
