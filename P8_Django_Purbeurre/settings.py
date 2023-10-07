@@ -96,7 +96,7 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
-        'OPTIONS': {'sslmode': 'disable'},
+        'DB_SSLMODE': os.getenv('DB_SSLMODE'),
     }
 }
 
