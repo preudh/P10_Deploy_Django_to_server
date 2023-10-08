@@ -1,7 +1,6 @@
 """ Script to register data from OpenFoodFacts in the database """
 
 from django.core.management.base import BaseCommand
-from django_command_debug.management.base import DebugMixin
 from app_data_off.views import drop_everythings, get_product_off
 
 import dj_database_url
@@ -9,7 +8,7 @@ import psycopg2
 import os
 
 
-class Command(DebugMixin, BaseCommand):
+class Command(BaseCommand):
     help = 'create and load the database'
 
     def handle(self, *args, **options):

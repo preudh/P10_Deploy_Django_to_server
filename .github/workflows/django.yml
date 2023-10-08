@@ -1,5 +1,5 @@
 name: Django app CI/CD
-#
+
 on:
   push:
     branches: '**'
@@ -8,45 +8,18 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
 
-    services:
-      db:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: ${{ secrets.DB_NAME }}
-          POSTGRES_USER: ${{ secrets.DB_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        ports:
-            - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Build Docker image
-      run: docker build -t my-django-app .
-
-    - name: Run Tests inside Docker container
+    - name: Build Docker image and Run Tests
       run: |
-        docker run \
-          -e DB_HOST=db \
-          -e DB_NAME=${{ secrets.DB_NAME }} \
-          -e DB_USER=${{ secrets.DB_USER }} \
-          -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-          -e DB_PORT=5432 \
-          -e DB_ENGINE=django.db.backends.postgresql_psycopg2 \
-          my-django-app sh -c "\
-            python manage.py test && \
-            python manage.py collectstatic --no-input && \
-            python3 manage.py test app_users.tests.CustomUserTests && \
-            python3 manage.py test app_manage.tests.SearchTestCase && \
-            python3 manage.py test app_manage.tests.BasePageTestCase && \
-            python3 manage.py test app_manage.tests.TermesPageTestCase"
+        docker-compose -f docker-compose.ci.yml up --build --exit-code-from web
 
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_test
-    if: github.ref == 'refs/heads/main'  # Adjustez avec le nom de votre branche principale si elle est différente.
+    if: github.ref == 'refs/heads/main'  # Adjust with the name of your main branch if it's different.
 
     steps:
     - name: Checkout Code
@@ -61,7 +34,8 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t registry.digitalocean.com/my-project/my-app:$GITHUB_SHA .
+        docker-compose -f docker-compose.prod.yml build web
+        docker tag my-django-app:latest registry.digitalocean.com/my-project/my-app:$GITHUB_SHA
         docker push registry.digitalocean.com/my-project/my-app:$GITHUB_SHA
 
     - name: Deploy to DigitalOcean
@@ -77,3 +51,4 @@ jobs:
       run: |
         kubectl set image deployment/my-app my-app=registry.digitalocean.com/my-project/my-app:$GITHUB_SHA
         kubectl rollout status deployment/my-app
+

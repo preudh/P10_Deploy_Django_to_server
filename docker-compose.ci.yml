@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sh -c "python manage.py wait_for_db && \
+                    python3 manage.py test app_users.tests.CustomUserTests && \
+                    python3 manage.py test app_manage.tests.SearchTestCase && \
+                    python3 manage.py test app_manage.tests.BasePageTestCase && \
+                    python3 manage.py test app_manage.tests.TermesPageTestCase && \
+                    python manage.py collectstatic --no-input"
+    volumes:
+      - .:/app
+    environment:
+      DB_HOST: db
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DB_PORT: 5432
+      DB_ENGINE: django.db.backends.postgresql_psycopg2
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${{ secrets.DB_NAME }}
+      POSTGRES_USER: ${{ secrets.DB_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
