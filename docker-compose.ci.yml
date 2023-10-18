@@ -5,8 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: sh -c "python manage.py wait_for_db && \
-                    python3 manage.py test app_users.tests.CustomUserTests && \
+    command: sh -c "python3 manage.py test app_users.tests.CustomUserTests && \
                     python3 manage.py test app_manage.tests.SearchTestCase && \
                     python3 manage.py test app_manage.tests.BasePageTestCase && \
                     python3 manage.py test app_manage.tests.TermesPageTestCase && \
