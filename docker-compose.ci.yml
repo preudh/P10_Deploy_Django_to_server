@@ -5,10 +5,7 @@ services:
       build:
         context: .
         dockerfile: Dockerfile
-      command: sh -c "python3 manage.py test app_users.tests.CustomUserTests && \
-                      python3 manage.py test app_manage.tests.SearchTestCase && \
-                      python3 manage.py test app_manage.tests.BasePageTestCase && \
-                      python3 manage.py test app_manage.tests.TermesPageTestCase"
+      command: sh run_tests.sh  # Ici, nous invoquons le script avec `sh`
       volumes:
         - .:/app
       environment:
@@ -37,5 +34,6 @@ volumes:
 
 networks:
   monreseau:
+
 
 
