@@ -8,7 +8,7 @@ services:
     command: sh -c "python3 manage.py test app_users.tests.CustomUserTests && \
                     python3 manage.py test app_manage.tests.SearchTestCase && \
                     python3 manage.py test app_manage.tests.BasePageTestCase && \
-                    python3 manage.py test app_manage.tests.TermesPageTestCase
+                    python3 manage.py test app_manage.tests.TermesPageTestCase"
     volumes:
       - .:/app
     environment:
