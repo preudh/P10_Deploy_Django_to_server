@@ -13,15 +13,15 @@ services:
     volumes:
       - .:/app
     environment:
-      DATABASE_URL: postgres://postgres:postgre@db:5432/purbeurre
+      DATABASE_URL: postgres://postgres:postgre@pgdb:5432/purbeurre
       SECRET_KEY: 'django-insecure-^a-59(+zq-hg3=-p+aejc%znju13kz(a-yln_ly4-ee7pl*f8'
       DEBUG: 'True'
     depends_on:
-      - db
+      - pgdb
     networks:
       - monreseau
 
-  db:
+  pgdb:
     image: postgres:13
     environment:
       POSTGRES_DB: purbeurre
