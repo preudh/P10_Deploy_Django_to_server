@@ -1,33 +1,39 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  web:
-    build: .
-    command: /bin/sh -c "python manage.py runserver 0.0.0.0:8000 && python manage.py cm_db"
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    environment:
-      DB_HOST: db
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      SECRET_KEY: ${SECRET_KEY}
-      DB_PORT: 5432
-      DB_ENGINE: django.db.backends.postgresql_psycopg2
-  db:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    django:
+        build: .
+        container_name: django
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/app
+        ports:
+            - "8000:8000"
+        depends_on:
+            - pgdb
+        environment:
+            - DATABASE_URL=postgres://postgres:postgres@pgdb:5432/postgres
+        networks:
+            - monreseau
+
+    pgdb:
+        image: postgres:latest
+        container_name: pgdb
+        environment:
+        - POSTGRES_DB=postgres
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        volumes:
+            - pgdata_data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - monreseau
 
 volumes:
-  postgres_data:
+    pgdata_data:
+
+networks:
+    monreseau:
 
 

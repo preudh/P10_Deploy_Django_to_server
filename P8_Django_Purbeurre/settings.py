@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")  # take secret key from environment va
 # DEBUG = os.environ.get("DEBUG")  # take debug from environment variables
 DEBUG = os.environ.get("DEBUG") == "True"
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','*']
 
 # Application definition
 
@@ -88,17 +88,33 @@ WSGI_APPLICATION = 'P8_Django_Purbeurre.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 # Database configuration
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_USER'),
+#         'PASSWORD': os.getenv('DB_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#         # 'HOST': 'db',  # Use the service name from docker-compose.yml
+#         'PORT': os.getenv('DB_PORT'),
+#         # 'DB_SSLMODE': os.getenv('DB_SSLMODE'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
-        'DB_SSLMODE': os.getenv('DB_SSLMODE'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'pgdb',
+        'PORT': 5432,
     }
 }
+
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -139,6 +155,10 @@ STATIC_URL = "/static/"  # ok
 STATICFILES_DIRS = [str(BASE_DIR.joinpath("static"))]  # new
 STATIC_ROOT = str(BASE_DIR.joinpath("staticfiles"))  # absolute location of static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # new 3003
+# WHITENOISE_MANIFEST_STRICT = False
+
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
