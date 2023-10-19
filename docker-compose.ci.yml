@@ -10,7 +10,7 @@ services:
         - .:/app
       environment:
         DATABASE_URL: postgres://postgres:postgre@pgdb:5432/purbeurre
-        SECRET_KEY: ${DJANGO_SECRET_KEY} # Nous utilisons la variable d'environnement
+        SECRET_KEY: ${SECRET_KEY} # Nous utilisons la variable d'environnement
         DEBUG: 'True'
       depends_on:
         - pgdb
