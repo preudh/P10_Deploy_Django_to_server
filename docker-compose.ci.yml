@@ -10,7 +10,7 @@ services:
         - .:/app
       environment:
         DATABASE_URL: postgres://postgres:postgre@pgdb:5432/purbeurre
-        SECRET_KEY: 'django-insecure-^a-59(+zq-hg3=-p+aejc%znju13kz(a-yln_ly4-ee7pl*f8'
+        SECRET_KEY: ${DJANGO_SECRET_KEY} # Nous utilisons la variable d'environnement
         DEBUG: 'True'
       depends_on:
         - pgdb
