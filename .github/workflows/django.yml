@@ -33,5 +33,5 @@ jobs:
         username: ${{ secrets.DO_USERNAME }}
         password: ${{ secrets.DO_PASSWORD }}
         script: |
-          cd /path/on/droplet
+          cd /root/mon_projet
           docker-compose -f docker-compose.prod.yml up --build -d

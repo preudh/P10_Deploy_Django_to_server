@@ -60,6 +60,11 @@ DO_USERNAME C'est le nom d'utilisateur que vous utilisez pour vous connecter à 
 
 DO_PASSWORD C'est le mot de passe que vous utilisez pour vous connecter à votre droplet. Si vous avez choisi de configurer votre droplet avec un mot de passe lors de sa création, c'est ce mot de passe. Si vous avez choisi une clé SSH, cette option ne s'applique pas (mais dans votre cas, vous avez mentionné avoir choisi un mot de passe).
 
+-----------------
+Création du répertoire sur votre droplet:
+
+mkdir -p /root/mon_projet
+------------------
 
 
 
