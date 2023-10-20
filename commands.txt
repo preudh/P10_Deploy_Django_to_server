@@ -28,13 +28,13 @@ DATABASES = {
 docker-compose -f docker-compose.dev.yml down -v
 docker-compose -f docker-compose.dev.yml build
 docker-compose -f docker-compose.dev.yml up -d
-
+---------
 docker-compose -f docker-compose.dev.yml down
 docker-compose -f docker-compose.dev.yml build --no-cache
 docker-compose -f docker-compose.dev.yml up -d
 docker exec -it django python manage.py migrate
 docker exec -it django python manage.py cm_db
-
+---------
 exporter la base de données purbeurre via pgadmin sur le repertoire ci dessous
 puis utiliser les commandes ci dessous pour la restaurer dans le container pgdb
 cd C:\ProjetsOC\P10
@@ -43,17 +43,23 @@ docker exec -it pgdb psql -U postgres -d postgres -a -f /tmp/purbeurre
 docker exec -it pgdb rm /tmp/purbeurre
 
 
+----------
+Dans la console du droplet digital ocean installer Docker et Docker Compose sur votre Droplet
 
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker --version
+docker-compose --version
+-----------
 
+DO_HOST C'est l'adresse IP de votre droplet sur DigitalOcean. Vous pouvez la trouver dans le tableau de bord de votre compte DigitalOcean, sous la section "Droplets". C'est l'adresse IP publique que DigitalOcean vous attribue lorsque vous créez un droplet.
 
+DO_USERNAME C'est le nom d'utilisateur que vous utilisez pour vous connecter à votre droplet. Si vous avez choisi une image Ubuntu standard, alors le nom d'utilisateur par défaut est généralement root, sauf si vous avez configuré un autre utilisateur.
 
+DO_PASSWORD C'est le mot de passe que vous utilisez pour vous connecter à votre droplet. Si vous avez choisi de configurer votre droplet avec un mot de passe lors de sa création, c'est ce mot de passe. Si vous avez choisi une clé SSH, cette option ne s'applique pas (mais dans votre cas, vous avez mentionné avoir choisi un mot de passe).
 
-
-
-
-docker cp C:\ProjetsOC\P10\purbeurre pgdb:/
-docker exec -it pgdb /bin/bash
-psql -U postgres -d postgres < /purbeurre
 
 
 
