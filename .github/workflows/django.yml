@@ -22,6 +22,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_test  # Assurez-vous que cette étape ne s'exécute que si la précédente réussit
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -33,5 +34,10 @@ jobs:
         username: ${{ secrets.DO_USERNAME }}
         password: ${{ secrets.DO_PASSWORD }}
         script: |
-          cd /root/mon_projet
+          cd /root
+          # Supprimez l'ancien répertoire s'il existe
+          rm -rf mon_projet
+          # Clonez le dépôt
+          git clone https://github.com/preudh/P10_Deploy_Django_to_server.git mon_projet
+          cd mon_projet
           docker-compose -f docker-compose.prod.yml up --build -d
