@@ -31,20 +31,6 @@ jobs:
         with:
           host: ${{ secrets.DO_HOST }}
           username: ${{ secrets.DO_USERNAME }}
-          password: ${{ secrets.DO_PASSWORD }}
-          script: |
-            cd /root
-            # Supprimez l'ancien répertoire s'il existe
-            rm -rf mon_projet
-            # Clonez le dépôt en utilisant SSH
-            GIT_SSH_COMMAND="ssh -i <(echo "$PRIVATE_KEY")" git clone git@github.com:preudh/P10_Deploy_Django_to_server.git mon_projet
-            cd mon_projet
-            docker-compose -f docker-compose.prod.yml up --build -d
-      - name: Deploy with docker-compose on DigitalOcean
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DO_HOST }}
-          username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /***
