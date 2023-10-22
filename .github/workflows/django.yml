@@ -35,7 +35,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             # Ajout de la clé du serveur DigitalOcean aux hôtes connus pour éviter les erreurs de vérification
-            echo "$(ssh-keyscan ${{ secrets.DO_HOST }})" >> ~/.ssh/known_hosts
+            echo "$(ssh-keyscan 188.166.0.18)" >> ~/.ssh/known_hosts
 
             # Se déplacer vers le répertoire de déploiement
             cd /var/www
