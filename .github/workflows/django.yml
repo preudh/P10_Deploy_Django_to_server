@@ -26,13 +26,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
       - name: Set up SSH
         run: |
-          echo "$PRIVATE_KEY" > private_key
-          chmod 600 private_key
-          mkdir -p ~/.ssh
-          touch ~/.ssh/known_hosts
+          echo "$PRIVATE_KEY" > ~/.ssh/private_key
+          chmod 600 ~/.ssh/private_key
           ssh-keyscan ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
         env:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -48,6 +45,6 @@ jobs:
             # Supprimez l'ancien répertoire s'il existe
             rm -rf mon_projet
             # Clonez le dépôt en utilisant SSH
-            GIT_SSH_COMMAND="ssh -i $(pwd)/private_key" git clone git@github.com:preudh/P10_Deploy_Django_to_server.git mon_projet
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/private_key" git clone git@github.com:preudh/P10_Deploy_Django_to_server.git mon_projet
             cd mon_projet
             docker-compose -f docker-compose.prod.yml up --build -d
