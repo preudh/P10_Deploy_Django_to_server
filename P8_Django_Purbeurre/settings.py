@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")  # take secret key from environment va
 # DEBUG = os.environ.get("DEBUG")  # take debug from environment variables
 DEBUG = os.environ.get("DEBUG") == "True"
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','*']
+ALLOWED_HOSTS = ['188.166.0.18','127.0.0.1', 'localhost','*']
 
 # Application definition
 

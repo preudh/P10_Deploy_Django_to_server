@@ -7,6 +7,8 @@ services:
         dockerfile: Dockerfile
       volumes:
         - .:/app
+      ports:
+        - "8000:8000"
       environment:
         DATABASE_URL: postgres://postgres:postgre@pgdb:5432/purbeurre
         SECRET_KEY: ${SECRET_KEY}
