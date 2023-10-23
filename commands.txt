@@ -65,6 +65,14 @@ Création du répertoire sur votre droplet:
 
 mkdir -p /root/mon_projet
 ------------------
+Git bash
+
+scp ~/.ssh/id_rsa root@188.166.0.18:~/.ssh/
+
+--------------------
+
+
+
 
 
 
