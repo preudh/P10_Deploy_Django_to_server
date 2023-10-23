@@ -34,6 +34,9 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # ajuster les permissions de la clé privée 
+            chmod 0600 ~/.ssh/id_rsa
+            
             # Ajout de la clé du serveur DigitalOcean aux hôtes connus pour éviter les erreurs de vérification
             echo "$(ssh-keyscan github.com)" >> ~/.ssh/known_hosts
 
