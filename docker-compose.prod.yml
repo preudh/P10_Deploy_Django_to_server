@@ -12,7 +12,8 @@ services:
       environment:
         DATABASE_URL: postgres://postgres:postgre@pgdb:5432/purbeurre
         SECRET_KEY: ${SECRET_KEY}
-        DEBUG: 'False'
+#        DEBUG: 'False'
+        DEBUG: 'True'
       depends_on:
         - pgdb
       networks:
