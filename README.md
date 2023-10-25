@@ -1,64 +1,66 @@
-# OC Project 11: Improve Project P8 with new features "Forgotten Password Reset"
+# OC Project 10: creating a Continuous Integration/Continuous Deployment (CI/CD) pipeline
 
-### Description
+This project is part of the OC Python developer course. The Pur Beurre startup, for which you have already worked, 
+decides to set up a web application that allows customers to find healthy alternatives (better nutriscore) using the
+[OpenFoodFacts](https://fr.openfoodfacts.org/) data. The application is built using the Django web framework and 
+postgreSQL database. The application is deployed on a DigitalOcean Droplet.
 
-This project is part of the OC Python developer course.
+## Introduction
 
-The Pur Beurre start-up, for which you have already worked, decides to set up a web application that allows 
-customers to find healthy alternatives (better nutriscore):
+This guide outlines the process of creating a Continuous Integration/Continuous Deployment (CI/CD) pipeline for a
+project using PyCharm Pro, GitHub Actions, Docker, Docker Compose, and DigitalOcean. The goal is to streamline the
+continuous deployment of the application while ensuring its reliability and security. GitHub Actions is chosen as
+the CI/CD tool for its native integration with GitHub.
 
-* The [OpenFoodFacts](https://fr.openfoodfacts.org/) Data
-* Use of the Django web framework
-* Test-driven development: unittest and functional test with Selenium
-* Responsive interface with the Bootstrap CSS framework
+### Configuration Overview
 
-### Functionalities 
+1. **Local Development Environment and Version Control**:
+   
+   - PyCharm Pro is chosen as the development environment.
+   - Git is used for version control.
+   - The source code is hosted on GitHub.
 
-* Search field from the home page
-* The search must not be using AJAX
-* The customer can create a user account and login/logout
-* The customer can save searches and delete them
-* The customer can see the details of the products
-* Responsive interface
+2. **Continuous Integration (CI)**:
 
-### New Feature
-* Forgotten Password Reset:
-  - Users can request a password reset
-  - An email with password reset instructions is sent to the user
+   - GitHub Actions is configured to automate unit testing and Docker container builds upon code pushes to the main branch.
 
-### Utilization and Software Needed
-*On your local desktop
-* Set up a virtual environment in your IDE (e.g., PyCharm or VSC)
-* Use Python 3.11.4 
-* Create your database (e.g., with pgAdmin 4)
-* Configure the database in settings.py
-* Make migrations
-```
-python manage.py makemigrations
-python manage.py migrate
-```
+3. **Automated Testing**:
 
-* Load the database with categories and products according to the categories listed in the constante.py file
-which is in the directory /app_data_off/management/commands/constante.py
-To do that, use the command in your terminal:
-python manage.py cm_db
-Run the local server in your IDE
+   - Tests are executed using the `sh run_tests.sh` command, which runs the specified test script.
 
-# used to send email to users
-* EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
-* EMAIL_HOST = os.getenv('EMAIL_HOST')
-* EMAIL_PORT = os.getenv('EMAIL_PORT', default=587)
-* EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', default=True)
-* EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-* EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-* EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'emails')  # new to test email in local
+4. **Docker Usage**:
 
-Emails are sent via Gmail, and two-factor authentication is required to obtain the application key "EMAIL_HOST_PASSWORD"
+   - Docker Desktop is used for local containerization, allowing for the creation and testing of containers locally.
 
-Note: The password reset developments were done locally and have not been deployed to Heroku like the P8 project.
+5. **Continuous Deployment (CD)**:
 
-# You can search alternatives for these categories (e.g.):
+   - Deployment is managed using Docker Compose with three separate configuration files for development, CI, and
+   - production environments.
 
+6. **DigitalOcean Deployment**:
+
+   - The application is deployed on a DigitalOcean Droplet for its ease of use and performance.
+
+7. **SSH Access**:
+
+   - SSH is used for remote server access, file copying, and remote command execution.
+
+8. **Database Export/Import**:
+
+   - Initial PostgreSQL databases are transferred from the local environment to DigitalOcean using `pg_dump` and `psql` commands.
+
+9. **Docker Network**:
+
+   - A Docker network is configured to ensure communication between containers housing the Django application 
+   - and PostgreSQL database.
+
+### Automated Database Updates
+
+In addition to the CI/CD pipeline, a cron task has been set up to regularly update the application's database 
+with fresh data from OpenFoodFacts. The following command is scheduled to run periodically:
+
+
+###
 You can search alternatives for these categories (e.g.):
 
 * Aides culinaires
