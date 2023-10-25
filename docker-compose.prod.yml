@@ -10,10 +10,9 @@ services:
       ports:
         - "8000:8000"
       environment:
-        DATABASE_URL: postgres://postgres:postgre@pgdb:5432/purbeurre
-        SECRET_KEY: ${SECRET_KEY}
-#        DEBUG: 'False'
-        DEBUG: 'True'
+        DATABASE_URL: postgres://$DB_USER:$DB_PASSWORD@pgdb:5432/$DB_NAME
+        SECRET_KEY: $SECRET_KEY
+        DEBUG: 'True'  # Vous pouvez régler DEBUG comme nécessaire pour l'environnement de production
       depends_on:
         - pgdb
       networks:
@@ -22,9 +21,9 @@ services:
     pgdb:
       image: postgres:13
       environment:
-        POSTGRES_DB: purbeurre
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgre
+        POSTGRES_DB: $DB_NAME
+        POSTGRES_USER: $DB_USER
+        POSTGRES_PASSWORD: $DB_PASSWORD
         POSTGRES_HOST_AUTH_METHOD: trust
       volumes:
         - postgres_data:/var/lib/postgresql/data

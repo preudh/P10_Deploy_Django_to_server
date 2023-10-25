@@ -12,7 +12,7 @@ services:
         depends_on:
             - pgdb
         environment:
-            - DATABASE_URL=postgres://postgres:postgres@pgdb:5432/postgres
+            - DATABASE_URL=postgres://$DB_USER:$DB_PASSWORD@pgdb:5432/$DB_NAME
         networks:
             - monreseau
 
@@ -20,9 +20,9 @@ services:
         image: postgres:latest
         container_name: pgdb
         environment:
-        - POSTGRES_DB=postgres
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=$DB_NAME
+            - POSTGRES_USER=$DB_USER
+            - POSTGRES_PASSWORD=$DB_PASSWORD
         volumes:
             - pgdata_data:/var/lib/postgresql/data
         ports:

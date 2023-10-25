@@ -88,31 +88,29 @@ WSGI_APPLICATION = 'P8_Django_Purbeurre.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 # Database configuration
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': os.getenv('DB_NAME'),
-#         'USER': os.getenv('DB_USER'),
-#         'PASSWORD': os.getenv('DB_PASSWORD'),
-#         'HOST': os.getenv('DB_HOST'),
-#         # 'HOST': 'db',  # Use the service name from docker-compose.yml
-#         'PORT': os.getenv('DB_PORT'),
-#         # 'DB_SSLMODE': os.getenv('DB_SSLMODE'),
-#     }
-# }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'pgdb',
-        'PORT': 5432,
+if os.environ.get('DJANGO_ENV') == 'production':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('POSTGRES_DB'),
+            'USER': os.environ.get('POSTGRES_USER'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+            'HOST': 'pgdb',
+            'PORT': 5432,
+        }
     }
-}
-
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'purbeurre',
+            'USER': 'postgres',
+            'PASSWORD': 'postgre',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 

@@ -5,12 +5,12 @@ services:
       build:
         context: .
         dockerfile: Dockerfile
-      command: sh run_tests.sh  # Ici, nous invoquons le script avec `sh`
+      command: sh run_tests.sh
       volumes:
         - .:/app
       environment:
-        DATABASE_URL: postgres://postgres:postgre@pgdb:5432/purbeurre
-        SECRET_KEY: ${SECRET_KEY} # Nous utilisons la variable d'environnement
+        DATABASE_URL: postgres://$DB_USER:$DB_PASSWORD@pgdb:5432/$DB_NAME
+        SECRET_KEY: $SECRET_KEY
         DEBUG: 'True'
       depends_on:
         - pgdb
@@ -20,9 +20,9 @@ services:
     pgdb:
       image: postgres:13
       environment:
-        POSTGRES_DB: purbeurre
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgre
+        POSTGRES_DB: $DB_NAME
+        POSTGRES_USER: $DB_USER
+        POSTGRES_PASSWORD: $DB_PASSWORD
         POSTGRES_HOST_AUTH_METHOD: trust
       volumes:
         - postgres_data:/var/lib/postgresql/data
@@ -34,6 +34,7 @@ volumes:
 
 networks:
   monreseau:
+
 
 
 
