@@ -10,7 +10,7 @@ services:
       ports:
         - "8000:8000"
       environment:
-        DJANGO_ENV: $DJANGO_ENV
+        DJANGO_ENV: cicd
         DATABASE_URL: postgres://$DB_USER:$DB_PASSWORD@pgdb:5432/$DB_NAME
         SECRET_KEY: $SECRET_KEY
         DEBUG: 'True'  # Vous pouvez régler DEBUG comme nécessaire pour l'environnement de production

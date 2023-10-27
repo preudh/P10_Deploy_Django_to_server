@@ -9,7 +9,7 @@ services:
       volumes:
         - .:/app
       environment:
-        DJANGO_ENV: $DJANGO_ENV
+        DJANGO_ENV: cicd
         DATABASE_URL: postgres://$DB_USER:$DB_PASSWORD@pgdb:5432/$DB_NAME
         SECRET_KEY: $SECRET_KEY
         DEBUG: 'True'
