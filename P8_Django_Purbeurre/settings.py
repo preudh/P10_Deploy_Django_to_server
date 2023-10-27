@@ -89,44 +89,42 @@ WSGI_APPLICATION = 'P8_Django_Purbeurre.wsgi.application'
 
 # Database configuration
 
-if os.environ.get('DJANGO_ENV') == 'local':
-    DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                'NAME': 'purbeurre',
-                'USER': 'postgres',
-                'PASSWORD': 'postgre',
-                'HOST': 'localhost',
-                'PORT': '5432',
-                'OPTIONS': {'sslmode': 'disable'},
-            }
-        }
-
-elif os.environ.get('DJANGO_ENV') == 'docker_desktop':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
-            'HOST': 'pgdb',
-            'PORT': 5432,
-        }
+# Database config 'local':
+# DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'NAME': 'purbeurre',
+#             'USER': 'postgres',
+#             'PASSWORD': 'postgre',
+#             'HOST': 'localhost',
+#             'PORT': '5432',
+#             'OPTIONS': {'sslmode': 'disable'},
+#         }
+#     }
+#
+# # DATABASE config for 'docker_desktop':
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'pgdb',
+#         'PORT': 5432,
+#     }
+# }
+# DATABASE config for'cicd':
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': 'pgdb',
+        'PORT': 5432,
     }
-elif os.environ.get('DJANGO_ENV') == 'cicd':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('POSTGRES_DB'),
-            'USER': os.environ.get('POSTGRES_USER'),
-            'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-            'HOST': 'pgdb',
-            'PORT': 5432,
-        }
-    }
+}
 
-else:
-    raise ValueError("Invalid DJANGO_ENV value")
 
 
 # Password validation

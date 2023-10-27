@@ -14,8 +14,6 @@ jobs:
 
     - name: Build Docker image and Run Tests
       env:
-        DJANGO_ENV: ${{ secrets.DJANGO_ENV }} # new
-        POSTGRES_DB: ${{ secrets.POSTGRES_DB }} # new
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
