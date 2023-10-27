@@ -88,8 +88,22 @@ WSGI_APPLICATION = 'P8_Django_Purbeurre.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 # Database configuration
+docker_desktop = os.environ.get('DJANGO_ENV') == 'docker_desktop'
+cicd = os.environ.get('DJANGO_ENV') == 'cicd'
+local = os.environ.get('DJANGO_ENV') == 'local'
 
-if os.environ.get('DJANGO_ENV') == 'production':
+if docker_desktop:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'pgdb',
+            'PORT': '5432',
+        }
+    }
+elif cicd:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -97,21 +111,23 @@ if os.environ.get('DJANGO_ENV') == 'production':
             'USER': os.environ.get('POSTGRES_USER'),
             'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
             'HOST': 'pgdb',
-            'PORT': 5432,
+            'PORT': '5432',
         }
     }
-else:
+elif local:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'purbeurre',
             'USER': 'postgres',
             'PASSWORD': 'postgre',
             'HOST': 'localhost',
             'PORT': '5432',
+            'OPTIONS': {'sslmode': 'disable'},
         }
     }
-
+else:
+    raise ValueError("Invalid DJANGO_ENV value")
 
 
 # Password validation

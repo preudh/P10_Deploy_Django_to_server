@@ -4,22 +4,43 @@ docker-compose up / down
 
 #
 ---------
+**Utilisation de Docker desktop**
+
 Ces commandes sont utilisées pour gérer un environnement de développement basé sur Docker Compose. Elles permettent de créer, de construire et de lancer des conteneurs Docker pour une application Django et une base de données PostgreSQL, ainsi que d'exécuter des commandes spécifiques dans ces conteneurs.
+#1 - 3 commandes :
+docker-compose -f docker-compose.dev.yml down
+docker-compose -f docker-compose.dev.yml build --no-cache
+docker-compose -f docker-compose.dev.yml up -d
+
 
 Voici une explication détaillée de chaque commande :
-docker-compose -f docker-compose.dev.yml down : Cette commande arrête et supprime les conteneurs définis dans le fichier docker-compose.dev.yml. Elle nettoie l'environnement de développement en s'assurant que tous les conteneurs sont arrêtés et supprimés.
-docker-compose -f docker-compose.dev.yml build --no-cache : Cette commande construit les images Docker pour les services spécifiés dans le fichier docker-compose.dev.yml. L'option --no-cache indique à Docker de ne pas utiliser le cache lors de la construction, ce qui signifie que les images seront reconstruites à partir de zéro, ce qui est utile pour s'assurer que vous disposez de la dernière version de votre code.
-docker-compose -f docker-compose.dev.yml up -d : Cette commande démarre les conteneurs Docker en arrière-plan (-d pour "detach"). Les conteneurs sont créés à partir des images construites précédemment. Cela lance votre application Django et votre base de données PostgreSQL en mode développement.
-docker exec -it django python manage.py migrate : Cette commande exécute la migration de la base de données en utilisant la gestion des migrations de Django. Elle s'adresse spécifiquement au conteneur nommé "django" et exécute la commande python manage.py migrate à l'intérieur de ce conteneur. Les migrations sont utilisées pour mettre à jour la structure de la base de données en fonction des changements dans les modèles Django.
-docker exec -it django python manage.py cm_db : Cette commande exécute une commande personnalisée cm_db dans le conteneur "django". La signification de cette commande dépend de votre application Django et de ce que vous avez défini pour la commande cm_db. Elle pourrait être utilisée pour effectuer des tâches spécifiques liées à la base de données ou à l'application.
----------
+docker-compose -f docker-compose.dev.yml down
+Cette commande arrête et supprime les conteneurs définis dans le fichier docker-compose.dev.yml. Elle nettoie l'environnement de développement en s'assurant que tous les conteneurs sont arrêtés et supprimés.
+docker-compose -f docker-compose.dev.yml build --no-cache
+cette commande construit les images Docker pour les services spécifiés dans le fichier docker-compose.dev.yml. L'option --no-cache indique à Docker de ne pas utiliser le cache lors de la construction, ce qui signifie que les images seront reconstruites à partir de zéro, ce qui est utile pour s'assurer que vous disposez de la dernière version de votre code.
+docker-compose -f docker-compose.dev.yml up -d
+Cette commande démarre les conteneurs Docker en arrière-plan (-d pour "detach"). Les conteneurs sont créés à partir des images construites précédemment. Cela lance votre application Django et votre base de données PostgreSQL en mode développement.
+docker exec -it django python manage.py migrate
+Cette commande exécute la migration de la base de données en utilisant la gestion des migrations de Django. Elle s'adresse spécifiquement au conteneur nommé "django" et exécute la commande python manage.py migrate à l'intérieur de ce conteneur. Les migrations sont utilisées pour mettre à jour la structure de la base de données en fonction des changements dans les modèles Django.
+docker exec -it django python manage.py cm_db
+Cette commande exécute une commande personnalisée cm_db dans le conteneur "django". La signification de cette commande dépend de votre application Django et de ce que vous avez défini pour la commande cm_db. Elle pourrait être utilisée pour effectuer des tâches spécifiques liées à la base de données ou à l'application.
+--------------
 exporter la base de données purbeurre via pgadmin sur le repertoire ci dessous
 puis utiliser les commandes ci dessous pour la restaurer dans le container pgdb
 cd C:\ProjetsOC\P10
+#2 Export de la base de données purbeurre dans le container pgdb
+3 commandes :
 docker cp C:\ProjetsOC\P10\purbeurre pgdb:/tmp/purbeurre
 docker exec -it pgdb psql -U postgres -d postgres -a -f /tmp/purbeurre
 docker exec -it pgdb rm /tmp/purbeurre
 ----------
+Githubactions
+définir les secrets dans les paramètres du dépôt GitHub.
+DOCKER_USERNAME
+DOCKER_PASSWORD
+
+
+-----------------
 Dans la console du droplet digital ocean installer Docker et Docker Compose sur votre Droplet
 
 curl -fsSL https://get.docker.com -o get-docker.sh
@@ -73,4 +94,11 @@ http://188.166.0.18:8000/.
 ----------
 docker exec -it django pip freeze
 ---------
-
+Pour mettre à jour votre système Ubuntu et appliquer les 16 mises à jour disponibles, vous pouvez utiliser la commande suivante :
+apt update
+apt upgrade
+reboot
+-----------------
+Pour exécuter psql, vous devez installer le client PostgreSQL. Vous pouvez le faire en utilisant la commande suggérée :
+apt install postgresql-client
+-----------------
