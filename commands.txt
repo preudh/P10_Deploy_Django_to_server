@@ -1,9 +1,3 @@
-docker-compose run django django-admin startproject P8_Django_Purbeurre .
-docker exec -it db psql -U postgres
-docker-compose up / down
-
-#
----------
 **Utilisation de Docker desktop**
 
 Ces commandes sont utilisées pour gérer un environnement de développement basé sur Docker Compose. Elles permettent de créer, de construire et de lancer des conteneurs Docker pour une application Django et une base de données PostgreSQL, ainsi que d'exécuter des commandes spécifiques dans ces conteneurs.
@@ -26,22 +20,23 @@ docker exec -it django python manage.py cm_db
 Cette commande exécute une commande personnalisée cm_db dans le conteneur "django". La signification de cette commande dépend de votre application Django et de ce que vous avez défini pour la commande cm_db. Elle pourrait être utilisée pour effectuer des tâches spécifiques liées à la base de données ou à l'application.
 --------------
 exporter la base de données purbeurre via pgadmin sur le repertoire ci dessous
-puis utiliser les commandes ci dessous pour la restaurer dans le container pgdb
+puis utiliser les commandes ci-dessous pour la restaurer dans le conteneur pgdb
 cd C:\ProjetsOC\P10
-#2 Export de la base de données purbeurre dans le container pgdb
+#2 Export de la base de données purbeurre dans le conteneur pgdb
 3 commandes :
 docker cp C:\ProjetsOC\P10\purbeurre pgdb:/tmp/purbeurre
 docker exec -it pgdb psql -U postgres -d postgres -a -f /tmp/purbeurre
 docker exec -it pgdb rm /tmp/purbeurre
+
 ----------
-Githubactions
+**Githubactions**
 définir les secrets dans les paramètres du dépôt GitHub.
 DOCKER_USERNAME
 DOCKER_PASSWORD
 
 
 -----------------
-Dans la console du droplet digital ocean installer Docker et Docker Compose sur votre Droplet
+**Dans la console du droplet digital ocean installer Docker et Docker Compose sur votre Droplet**
 
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh

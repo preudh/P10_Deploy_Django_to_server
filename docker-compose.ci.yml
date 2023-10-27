@@ -9,7 +9,6 @@ services:
       volumes:
         - .:/app
       environment:
-#        DATABASE_URL: postgres://postgres:postgre@pgdb:5432/purbeurre
         DATABASE_URL: postgres://$DB_USER:$DB_PASSWORD@pgdb:5432/$DB_NAME
         SECRET_KEY: $SECRET_KEY
         DEBUG: 'True'
@@ -21,9 +20,6 @@ services:
     pgdb:
       image: postgres:13
       environment:
-#        POSTGRES_DB: purbeurre
-#        POSTGRES_USER: postgres
-#        POSTGRES_PASSWORD: postgre
         POSTGRES_DB: $DB_NAME
         POSTGRES_USER: $DB_USER
         POSTGRES_PASSWORD: $DB_PASSWORD
