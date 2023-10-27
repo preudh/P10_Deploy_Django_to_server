@@ -12,6 +12,7 @@ services:
       environment:
         DJANGO_ENV: cicd
         DATABASE_URL: postgres://$DB_USER:$DB_PASSWORD@pgdb:5432/$DB_NAME
+        POSTGRES_DB: $DB_NAME # new
         SECRET_KEY: $SECRET_KEY
         DEBUG: 'True'  # Vous pouvez régler DEBUG comme nécessaire pour l'environnement de production
       depends_on:
