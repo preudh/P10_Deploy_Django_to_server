@@ -12,6 +12,10 @@ services:
         DATABASE_URL: postgres://$DB_USER:$DB_PASSWORD@pgdb:5432/$DB_NAME
         SECRET_KEY: $SECRET_KEY
         DEBUG: 'True'
+        POSTGRES_DB: $DB_NAME # new
+        POSTGRES_USER: $DB_USER # new
+        POSTGRES_PASSWORD: $DB_PASSWORD # new
+
       depends_on:
         - pgdb
       networks:
