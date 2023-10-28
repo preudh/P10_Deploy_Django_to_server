@@ -16,7 +16,7 @@ services:
         POSTGRES_DB: $DB_NAME # new
         POSTGRES_USER: $DB_USER # new
         POSTGRES_PASSWORD: $DB_PASSWORD # new
-
+        DJANGO_ENV: cicd
 
       depends_on:
         - pgdb
@@ -30,7 +30,7 @@ services:
         POSTGRES_USER: $DB_USER
         POSTGRES_PASSWORD: $DB_PASSWORD
         POSTGRES_HOST_AUTH_METHOD: trust
-        DJANGO_ENV: cicd
+
       volumes:
         - postgres_data:/var/lib/postgresql/data
       networks:
