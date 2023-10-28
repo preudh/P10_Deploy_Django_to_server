@@ -127,8 +127,14 @@ elif os.environ.get('DJANGO_ENV') == 'cicd':
             'PORT': 5432,
         }
     }
-else :
+# else :
+#     raise ValueError("Invalid DJANGO_ENV value")
+else:
+    print(f"Actual DJANGO_ENV value: {os.environ.get('DJANGO_ENV')}")
     raise ValueError("Invalid DJANGO_ENV value")
+
+
+
 
 
 # Password validation

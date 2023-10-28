@@ -15,6 +15,7 @@ services:
         POSTGRES_DB: $DB_NAME # new
         POSTGRES_USER: $DB_USER # new
         POSTGRES_PASSWORD: $DB_PASSWORD # new
+        DJANGO_ENV: $DJANGO_ENV # new
 
       depends_on:
         - pgdb
