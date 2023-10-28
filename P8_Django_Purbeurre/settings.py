@@ -104,7 +104,7 @@ if os.environ.get('DJANGO_ENV') == 'local':
         }
 
 # DATABASE config for docker_desktop
-elif os.environ.get('DJANGO_ENV') == 'docker_desktop':
+elif os.environ.get('DJANGO_ENV') == 'docker-desktop':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -176,6 +176,8 @@ STATIC_URL = "/static/"  # ok
 STATICFILES_DIRS = [str(BASE_DIR.joinpath("static"))]  # new
 STATIC_ROOT = str(BASE_DIR.joinpath("staticfiles"))  # absolute location of static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # new 3003
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
 # WHITENOISE_MANIFEST_STRICT = False
 
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
