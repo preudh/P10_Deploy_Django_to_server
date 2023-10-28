@@ -32,12 +32,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         env:
-#        DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DB_NAME: ${{ secrets.DB_NAME }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DJANGO_ENV: ${{ secrets.DJANGO_ENV }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DJANGO_ENV: ${{ secrets.DJANGO_ENV }}
 
       - name: Deploy with docker-compose on DigitalOcean
 
