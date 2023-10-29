@@ -1,5 +1,5 @@
 name: Django app CI/CD
-#
+
 on:
   push:
     branches: '**'
@@ -12,7 +12,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Build Docker image and Run Tests
+    - name: Set up Environment Variables
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -20,7 +20,16 @@ jobs:
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         DJANGO_ENV: ${{ secrets.DJANGO_ENV }}
+      run: |
+        # Export the environment variables for use in docker-compose.ci.yml
+        export DATABASE_URL=$DATABASE_URL
+        export SECRET_KEY=$SECRET_KEY
+        export DB_NAME=$DB_NAME
+        export DB_USER=$DB_USER
+        export DB_PASSWORD=$DB_PASSWORD
+        export DJANGO_ENV=$DJANGO_ENV
 
+    - name: Build Docker image and Run Tests
       run: |
         docker-compose -f docker-compose.ci.yml up --build --exit-code-from django
 
@@ -31,6 +40,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Set up Environment Variables
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -38,16 +48,30 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DJANGO_ENV: ${{ secrets.DJANGO_ENV }}
+        run: |
+          # Export the environment variables for use in the deployment script
+          export DATABASE_URL=$DATABASE_URL
+          export SECRET_KEY=$SECRET_KEY
+          export DB_NAME=$DB_NAME
+          export DB_USER=$DB_USER
+          export DB_PASSWORD=$DB_PASSWORD
+          export DJANGO_ENV=$DJANGO_ENV
 
       - name: Deploy with docker-compose on DigitalOcean
-
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DO_HOST }}
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          env:
+            DATABASE_URL: $DATABASE_URL
+            SECRET_KEY: $SECRET_KEY
+            DB_NAME: $DB_NAME
+            DB_USER: $DB_USER
+            DB_PASSWORD: $DB_PASSWORD
+            DJANGO_ENV: $DJANGO_ENV
           script: |
-            # ajuster les permissions de la clé privée 
+            # Ajuster les permissions de la clé privée 
             chmod 0600 ~/.ssh/id_rsa
             
             # Ajout de la clé du serveur DigitalOcean aux hôtes connus pour éviter les erreurs de vérification
@@ -67,3 +91,4 @@ jobs:
 
             # Lancer docker-compose
             docker-compose -f docker-compose.prod.yml up --build -d
+
