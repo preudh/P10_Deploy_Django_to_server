@@ -40,23 +40,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Set up Environment Variables
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DJANGO_ENV: ${{ secrets.DJANGO_ENV }}
-        run: |
-          # Export the environment variables for use in the deployment script
-          export DATABASE_URL=$DATABASE_URL
-          export SECRET_KEY=$SECRET_KEY
-          export DB_NAME=$DB_NAME
-          export DB_USER=$DB_USER
-          export DB_PASSWORD=$DB_PASSWORD
-          export DJANGO_ENV=$DJANGO_ENV
-
       - name: Deploy with docker-compose on DigitalOcean
         uses: appleboy/ssh-action@master
         with:
@@ -91,4 +74,5 @@ jobs:
 
             # Lancer docker-compose
             docker-compose -f docker-compose.prod.yml up --build -d
+
 
