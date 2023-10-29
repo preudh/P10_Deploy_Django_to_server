@@ -98,7 +98,6 @@ jobs:
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         DJANGO_ENV: ${{ secrets.DJANGO_ENV }}
-
       run: |
         docker-compose -f docker-compose.ci.yml up --build --exit-code-from django
 
