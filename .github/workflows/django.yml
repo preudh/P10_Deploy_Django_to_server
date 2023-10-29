@@ -46,26 +46,32 @@ jobs:
           host: ${{ secrets.DO_HOST }}
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DJANGO_ENV: ${{ secrets.DJANGO_ENV }}
+
           script: |
             # ajuster les permissions de la clé privée 
             chmod 0600 ~/.ssh/id_rsa
             
             # Ajout de la clé du serveur DigitalOcean aux hôtes connus pour éviter les erreurs de vérification
             echo "$(ssh-keyscan github.com)" >> ~/.ssh/known_hosts
-
+  
             # Se déplacer vers le répertoire de déploiement
             cd /var/www
-
+  
             # Supprimez l'ancien répertoire s'il existe
             rm -rf mon_projet
-
+  
             # Clonez le dépôt en utilisant SSH
             git clone git@github.com:preudh/P10_Deploy_Django_to_server.git mon_projet
-
+  
             # Se déplacer dans le répertoire du projet
             cd mon_projet
-
+  
             # Lancer docker-compose
             docker-compose -f docker-compose.prod.yml up --build -d
-
-
