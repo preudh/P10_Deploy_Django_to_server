@@ -1,6 +1,8 @@
 **Utilisation de Docker desktop**
 
-Ces commandes sont utilisées pour gérer un environnement de développement basé sur Docker Compose. Elles permettent de créer, de construire et de lancer des conteneurs Docker pour une application Django et une base de données PostgreSQL, ainsi que d'exécuter des commandes spécifiques dans ces conteneurs.
+Ces commandes sont utilisées pour gérer un environnement de développement basé sur Docker Compose. Elles permettent de
+créer, de construire et de lancer des conteneurs Docker pour une application Django et une base de données PostgreSQL,
+ainsi que d'exécuter des commandes spécifiques dans ces conteneurs.
 #1 - 3 commandes :
 docker-compose -f docker-compose.dev.yml down
 docker-compose -f docker-compose.dev.yml build --no-cache
@@ -9,15 +11,28 @@ docker-compose -f docker-compose.dev.yml up -d
 
 Voici une explication détaillée de chaque commande :
 docker-compose -f docker-compose.dev.yml down
-Cette commande arrête et supprime les conteneurs définis dans le fichier docker-compose.dev.yml. Elle nettoie l'environnement de développement en s'assurant que tous les conteneurs sont arrêtés et supprimés.
+Cette commande arrête et supprime les conteneurs définis dans le fichier docker-compose.dev.yml.
+Elle nettoie l'environnement de développement en s'assurant que tous les conteneurs sont arrêtés et supprimés.
+
 docker-compose -f docker-compose.dev.yml build --no-cache
-cette commande construit les images Docker pour les services spécifiés dans le fichier docker-compose.dev.yml. L'option --no-cache indique à Docker de ne pas utiliser le cache lors de la construction, ce qui signifie que les images seront reconstruites à partir de zéro, ce qui est utile pour s'assurer que vous disposez de la dernière version de votre code.
+cette commande construit les images Docker pour les services spécifiés dans le fichier docker-compose.dev.yml.
+L'option --no-cache indique à Docker de ne pas utiliser le cache lors de la construction, ce qui signifie que les images
+seront reconstruites à partir de zéro, ce qui est utile pour s'assurer que vous disposez de la dernière version de votre code.
+
 docker-compose -f docker-compose.dev.yml up -d
-Cette commande démarre les conteneurs Docker en arrière-plan (-d pour "detach"). Les conteneurs sont créés à partir des images construites précédemment. Cela lance votre application Django et votre base de données PostgreSQL en mode développement.
+Cette commande démarre les conteneurs Docker en arrière-plan (-d pour "detach"). Les conteneurs sont créés à partir des
+images construites précédemment. Cela lance votre application Django et votre base de données PostgreSQL en mode développement.
+
 docker exec -it django python manage.py migrate
-Cette commande exécute la migration de la base de données en utilisant la gestion des migrations de Django. Elle s'adresse spécifiquement au conteneur nommé "django" et exécute la commande python manage.py migrate à l'intérieur de ce conteneur. Les migrations sont utilisées pour mettre à jour la structure de la base de données en fonction des changements dans les modèles Django.
+Cette commande exécute la migration de la base de données en utilisant la gestion des migrations de Django. Elle
+s'adresse spécifiquement au conteneur nommé "django" et exécute la commande python manage.py migrate à l'intérieur de
+ce conteneur. Les migrations sont utilisées pour mettre à jour la structure de la base de données en fonction des
+changements dans les modèles Django.
+
 docker exec -it django python manage.py cm_db
-Cette commande exécute une commande personnalisée cm_db dans le conteneur "django". La signification de cette commande dépend de votre application Django et de ce que vous avez défini pour la commande cm_db. Elle pourrait être utilisée pour effectuer des tâches spécifiques liées à la base de données ou à l'application.
+Cette commande exécute une commande personnalisée cm_db dans le conteneur "django". La signification de cette commande
+dépend de votre application Django et de ce que vous avez défini pour la commande cm_db. Elle pourrait être utilisée
+pour effectuer des tâches spécifiques liées à la base de données ou à l'application.
 --------------
 exporter la base de données purbeurre via pgadmin sur le repertoire ci dessous
 puis utiliser les commandes ci-dessous pour la restaurer dans le conteneur pgdb
@@ -27,14 +42,11 @@ cd C:\ProjetsOC\P10
 docker cp C:\ProjetsOC\P10\purbeurre pgdb:/tmp/purbeurre
 docker exec -it pgdb psql -U postgres -d postgres -a -f /tmp/purbeurre
 docker exec -it pgdb rm /tmp/purbeurre
-
 ----------
 **Githubactions**
 définir les secrets dans les paramètres du dépôt GitHub.
 DOCKER_USERNAME
 DOCKER_PASSWORD
-
-
 -----------------
 **Dans la console du droplet digital ocean installer Docker et Docker Compose sur votre Droplet**
 
@@ -45,25 +57,21 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker --version
 docker-compose --version
 -----------
-
 DO_HOST C'est l'adresse IP de votre droplet sur DigitalOcean.
 Vous pouvez la trouver dans le tableau de bord de votre compte DigitalOcean, sous la section "Droplets".
 C'est l'adresse IP publique que DigitalOcean vous attribue lorsque vous créez un droplet.
-
 DO_USERNAME C'est le nom d'utilisateur que vous utilisez pour vous connecter à votre droplet.
 Si vous avez choisi une image Ubuntu standard, alors le nom d'utilisateur par défaut est généralement root,
 sauf si vous avez configuré un autre utilisateur.
-
 DO_PASSWORD C'est le mot de passe que vous utilisez pour vous connecter à votre droplet.
-Si vous avez choisi de configurer votre droplet avec un mot de passe lors de sa création, c'est ce mot de passe. Si vous avez choisi une clé SSH, cette option ne s'applique pas (mais dans votre cas, vous avez mentionné avoir choisi un mot de passe).
-
+Si vous avez choisi de configurer votre droplet avec un mot de passe lors de sa création, c'est ce mot de passe. Si vous
+avez choisi une clé SSH, cette option ne s'applique pas (mais dans votre cas, vous avez mentionné avoir choisi un mot de passe).
 -----------------
 Création du répertoire sur votre droplet:
-
 mkdir -p /root/mon_projet
 ------------------
-Git bash
-scp ~/.ssh/id_rsa root@188.166.0.18:~/.ssh/
+Pour copier votre clé SSH vers le serveur distant DigitalOcean, vous pouvez utiliser la commande scp dans Git Bash :
+scp ~/.ssh/id_rsa user@hostname:~/.ssh/
 ------------------------
 cd /var/www/mon_projet/
 nano .env
@@ -83,9 +91,28 @@ docker ps
 Lister tous les conteneurs, y compris ceux qui sont arrêtés :
 docker ps -a
 ------------------------------
-scp -i "C:\Users\pat\.ssh\id_rsa" "C:\ProjetsOC\P10\purbeurre" root@188.166.0.18:/tmp/
---------------------
-http://188.166.0.18:8000/.
+La commande scp est utilisée pour copier des fichiers de manière sécurisée entre un système local (votre PC) et un système distant (DigitalOcean) via SSH.
+Voici une explication de la commande adaptée à votre contexte :
+
+scp -i "chemin/vers/votre/clef_privée" "chemin/vers/votre/fichier_local" utilisateur@adresse_du_serveur:chemin/vers/destination_du_serveur
+
+-i "chemin/vers/votre/clef_privée" : Cela spécifie le chemin vers votre clé privée SSH que vous avez générée sur votre
+PC local et que vous utilisez pour l'authentification SSH avec votre serveur DigitalOcean.
+
+"chemin/vers/votre/fichier_local" : C'est le chemin complet du fichier que vous souhaitez copier depuis votre PC local
+vers le serveur DigitalOcean. Par exemple, cela pourrait être le chemin vers un fichier sur votre PC local que vous souhaitez transférer.
+
+utilisateur : C'est le nom de l'utilisateur sur le serveur DigitalOcean avec lequel vous vous connectez.
+Sur DigitalOcean, cela pourrait être "root" ou un autre nom d'utilisateur que vous avez configuré.
+
+adresse_du_serveur : C'est l'adresse IP de votre serveur DigitalOcean ou son nom de domaine. C'est là où vous spécifiez
+où vous voulez envoyer le fichier depuis votre PC local.
+
+chemin/vers/destination_du_serveur : C'est le chemin complet de destination sur votre serveur DigitalOcean où vous
+souhaitez copier le fichier depuis votre PC local. Vous pouvez spécifier un chemin absolu ou relatif sur le serveur.
+
+N'oubliez pas de personnaliser cette commande en remplaçant les chemins, l'utilisateur et l'adresse du serveur par les
+valeurs spécifiques à votre configuration.
 ----------
 docker exec -it django pip freeze
 ---------
@@ -97,3 +124,11 @@ reboot
 Pour exécuter psql, vous devez installer le client PostgreSQL. Vous pouvez le faire en utilisant la commande suggérée :
 apt install postgresql-client
 -----------------
+Exécutez cette commande dans PowerShell en tant qu'administrateur. Suivez les instructions à l'écran pour générer la clé SSH.
+Par défaut, la clé sera enregistrée dans C:\Users\[VotreNomDutilisateur]\.ssh\id_rsa.
+C:\Windows\System32\OpenSSH\ssh-keygen.exe -t rsa -b 4096 -C "votre_adresse_email@example.com"
+----------------------
+tâche Cron dans le conteneur Django sur DigitalOcean pour automatiser la mise à jour régulière de la base de données.
+La commande Cron utilisée est la suivante :
+```bash
+docker exec -it django python manage.py cm_db
