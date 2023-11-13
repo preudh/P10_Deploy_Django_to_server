@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path, include  # Functions for use in URLsconfs
 # admin.autodiscover()
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
 urlpatterns = [
     # '' means home page, when someone goes to home page the controller will go to app_manage app here we have urls.py
     path('', include('app_manage.urls')),
     path('', include('app_users.urls')),
     path('admin/', admin.site.urls),
+    path('sentry-debug/', trigger_error),
 ]
